@@ -1,0 +1,400 @@
+/* =========================
+   GLOBAL
+========================= */
+:root {
+    --lcd-bg: #9ead86;
+    --lcd-pixel: #2c3325;
+    --lcd-pixel-dim: rgba(44, 51, 37, 0.25);
+    --lcd-pixel-ghost: rgba(44, 51, 37, 0.45);
+    --phone-case: #262f35;
+    --phone-case-edge: #1a2024;
+    --phone-btn: #38434a;
+    --phone-btn-active: #20272c;
+    --phone-accent: #9faab0;
+    --canvas-size: 560px;
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #121518;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    touch-action: none;
+}
+
+/* =========================
+   NOKIA PHONE
+========================= */
+.phone-case {
+    background: linear-gradient(175deg, #2e383f 0%, #20282d 100%);
+    border: 4px solid var(--phone-case-edge);
+    box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.8),
+        inset 0 2px 4px rgba(255, 255, 255, 0.12),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px 14px;
+    width: auto;
+    max-width: 100vw;
+    height: auto;
+    max-height: 100dvh;
+    border-radius: 28px;
+    position: relative;
+}
+
+.phone-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 6px;
+}
+
+.phone-speaker {
+    width: 50px;
+    height: 5px;
+    background-color: #151a1d;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.8), 0 1px 1px rgba(255,255,255,0.08);
+    margin-bottom: 4px;
+}
+
+.phone-brand {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: var(--phone-accent);
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* =========================
+   LCD SCREEN
+========================= */
+.screen-bezel {
+    background: linear-gradient(180deg, #1b221d 0%, #151a16 100%);
+    border: 4px solid #141815;
+    border-radius: 12px;
+    padding: 6px 8px;
+    box-shadow: 
+        inset 0 3px 8px rgba(0,0,0,0.9),
+        0 2px 4px rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.screen-glass {
+    background-color: var(--lcd-bg);
+    border: 2px solid #5d6751;
+    border-radius: 6px;
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.45);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: filter 0.2s ease;
+}
+
+/* Scanline and Pixel Matrix Texture */
+.screen-glass::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.035) 0px,
+        rgba(0, 0, 0, 0.035) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 5;
+}
+
+/* Random Event: Blackout Mode */
+.screen-glass.blackout-active {
+    filter: brightness(0.22) contrast(1.8);
+}
+
+/* =========================
+   GAME BOARD
+========================= */
+.canvas-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+canvas#gameCanvas {
+    background-color: #8b9975;
+    display: block;
+    width: var(--canvas-size);
+    height: var(--canvas-size);
+    aspect-ratio: 1 / 1;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* =========================
+   SCORE / HUD
+========================= */
+.lcd-hud {
+    width: 100%;
+    padding: 3px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    color: var(--lcd-pixel);
+    font-weight: bold;
+    font-size: 12px;
+    border-bottom: 2px solid rgba(44, 51, 37, 0.35);
+    background-color: #9ead86;
+    z-index: 2;
+}
+
+.hud-row-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+#hudModeBadge {
+    letter-spacing: 1px;
+    font-weight: 900;
+}
+
+.hud-row-middle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 10px;
+    min-height: 14px;
+}
+
+.combo-badge {
+    background-color: var(--lcd-pixel);
+    color: #9ead86;
+    padding: 0 4px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.hud-hint {
+    opacity: 0.65;
+    font-size: 9px;
+}
+
+/* =========================
+   POWER-UPS
+========================= */
+.hud-row-powers {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    min-height: 15px;
+    overflow-x: auto;
+}
+
+.power-tag {
+    background-color: var(--lcd-pixel);
+    color: var(--lcd-bg);
+    padding: 1px 4px;
+    border-radius: 2px;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    animation: tagPulse 1.2s infinite alternate;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+.phone-softkeys {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 8px;
+    padding: 0 4px;
+    gap: 5px;
+}
+
+.soft-btn {
+    background: linear-gradient(180deg, #3d4950 0%, #293237 100%);
+    color: var(--phone-accent);
+    border: 2px solid #1c2327;
+    border-radius: 8px;
+    padding: 5px 9px;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #151a1d, 0 4px 6px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    flex: 1;
+    white-space: nowrap;
+}
+
+.soft-btn:active, .soft-btn.active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #151a1d, 0 2px 3px rgba(0,0,0,0.5);
+    background: var(--phone-btn-active);
+    color: #d1dfba;
+}
+
+.controls-container {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.control-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.ctrl-btn {
+    background: linear-gradient(180deg, #3c474e 0%, #2b3338 100%);
+    color: #b5c49f;
+    border: 2px solid #1a2024;
+    width: 60px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #151a1d, 0 5px 8px rgba(0,0,0,0.6);
+    transition: all 0.05s ease;
+}
+
+.ctrl-btn:active, .ctrl-btn.pressed {
+    background: #20272c;
+    color: #d1dfba;
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #151a1d, 0 2px 3px rgba(0,0,0,0.6);
+}
+
+.ctrl-btn.center-action {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #9faab0;
+    width: 54px;
+    height: 44px;
+}
+
+/* =========================
+   GAME OVER & INSTRUCTIONS
+========================= */
+.instructions {
+    margin-top: 4px;
+    font-size: 10px;
+    color: #7b888f;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.highlight-key {
+    color: #aebdc6;
+    font-weight: bold;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes tagPulse {
+    from { opacity: 0.85; }
+    to { opacity: 1; }
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 650px) {
+    .phone-case {
+        border-radius: 0;
+        border: none;
+        width: 100vw;
+        height: 100dvh;
+        max-height: 100dvh;
+        padding: 6px 8px 8px;
+        justify-content: space-around;
+    }
+
+    .phone-speaker {
+        width: 40px;
+        height: 4px;
+        margin-bottom: 2px;
+    }
+
+    .phone-brand {
+        font-size: 12px;
+        letter-spacing: 3px;
+        margin-bottom: 2px;
+    }
+
+    .ctrl-btn {
+        width: 56px;
+        height: 40px;
+        font-size: 17px;
+        border-radius: 10px;
+    }
+
+    .ctrl-btn.center-action {
+        width: 50px;
+        height: 40px;
+    }
+
+    .soft-btn {
+        padding: 4px 6px;
+        font-size: 9px;
+    }
+
+    .instructions {
+        font-size: 9px;
+        margin-top: 2px;
+    }
+}

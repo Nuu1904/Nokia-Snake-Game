@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Classic Nokia Snake arcade remake featuring responsive LCD display, super powers, combos, missions, skins, and retro sound effects.">
+    <title>Nokia Snake - Retro Arcade Remake</title>
+    <!-- Stylesheet (flat root path for seamless GitHub Pages hosting) -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Game Engine (flat root path for seamless GitHub Pages hosting) -->
+    <script src="game.js" defer></script>
+</head>
+<body>
+
+    <!-- Nokia 3310 Phone Chassis -->
+    <div class="phone-case" id="phoneChassis">
+        
+        <!-- Ear Speaker & Phone Brand -->
+        <div class="phone-top">
+            <div class="phone-speaker"></div>
+            <div class="phone-brand">NOKIA <span>3310</span></div>
+        </div>
+
+        <!-- Bezel & LCD Screen -->
+        <div class="screen-bezel">
+            <div class="screen-glass" id="screenGlass">
+                
+                <!-- Retro LCD HUD -->
+                <div class="lcd-hud">
+                    <div class="hud-row-top">
+                        <span>SCORE: <span id="score">0</span></span>
+                        <span id="hudModeBadge">ARCADE</span>
+                        <span>HIGH: <span id="highScore">0</span></span>
+                    </div>
+                    <div class="hud-row-middle">
+                        <span id="hudMissionText">🍎 EAT 15 FOODS (0/15)</span>
+                        <span id="hudComboText" style="display: none;"></span>
+                    </div>
+                    <div class="hud-row-powers" id="powerStatusRow">
+                        <span class="hud-hint">POWERS: COLLECT ITEMS ON BOARD</span>
+                    </div>
+                </div>
+
+                <!-- Canvas Board -->
+                <div class="canvas-container" id="canvasWrapper">
+                    <canvas id="gameCanvas" width="600" height="600"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phone Softkeys -->
+        <div class="phone-softkeys">
+            <button class="soft-btn" id="modeSoftBtn" title="Change Mode (M)">🌌 MODE</button>
+            <button class="soft-btn" id="skinSoftBtn" title="Snake Skins (S)">🐍 SKINS</button>
+            <button class="soft-btn" id="statsSoftBtn" title="Player Stats & Achievements">🏆 STATS</button>
+            <button class="soft-btn" id="pauseSoftBtn" title="Pause Game (P)">❚❚ PAUSE</button>
+            <button class="soft-btn" id="soundSoftBtn" title="Toggle Sound">🔊 ON</button>
+        </div>
+
+        <!-- On-Screen Touch D-Pad -->
+        <div class="controls-container">
+            <button class="ctrl-btn" id="upBtn" aria-label="Up">▲</button>
+            <div class="control-row">
+                <button class="ctrl-btn" id="leftBtn" aria-label="Left">◀</button>
+                <button class="ctrl-btn center-action" id="actionBtn" aria-label="Action / OK">OK</button>
+                <button class="ctrl-btn" id="rightBtn" aria-label="Right">▶</button>
+            </div>
+            <button class="ctrl-btn" id="downBtn" aria-label="Down">▼</button>
+        </div>
+
+        <!-- Instructions Guidance -->
+        <div class="instructions">
+            <span class="highlight-key">Arrows / WASD / Swipe</span> to Move &bull; 
+            <span class="highlight-key">P</span> Pause &bull; 
+            <span class="highlight-key">M</span> Mode &bull; 
+            <span class="highlight-key">Space</span> Start/Retry
+        </div>
+    </div>
+
+</body>
+</html>
